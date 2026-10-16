@@ -1,0 +1,15 @@
+fastapi==0.143.0
+uvicorn[standard]==0.53.0
+SQLAlchemy==2.1.4
+alembic==1.20.0
+pydantic==2.13.5
+pydantic-settings==2.15.0
+email-validator==2.3.0
+PyJWT==2.14.0
+bcrypt==5.0.0
+python-multipart==0.0.32
+# database drivers (PostgreSQL is the default in docker-compose; MySQL is supported too)
+psycopg[binary]>=3.2,<4
+PyMySQL>=1.1,<2
+# optional dashboard cache
+redis>=5.0,<7

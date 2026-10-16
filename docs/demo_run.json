@@ -1,0 +1,2506 @@
+{
+  "summary": {
+    "closed_status": "closed",
+    "db_asset_risk_score_before_remediation": 76.8,
+    "sla_status": "on_track",
+    "notifications_for_analyst": 3,
+    "dashboard_incidents": {
+      "total": 1,
+      "open": 0,
+      "resolved": 1,
+      "by_status": {
+        "closed": 1
+      },
+      "by_severity": {
+        "critical": 1
+      }
+    },
+    "audit_entries_seen": 37
+  },
+  "calls": [
+    {
+      "step": 1,
+      "request": "POST /auth/login",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwic2lkIjoiMmFhZTc2ZjItMmM2Zi00ZTg4LWJhMzUtYTBiYWY1NzhhZTJjIiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTc5MTk1NTAwNiwiZXhwIjoxNzkxOTU2ODA2LCJyb2xlIjoic3VwZXJfYWRtaW4ifQ.ein2CG4p48Nc_WQqwyZz3kLWXos0YwkjQFuOYgg1Ce0",
+        "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwic2lkIjoiMmFhZTc2ZjItMmM2Zi00ZTg4LWJhMzUtYTBiYWY1NzhhZTJjIiwidHlwZSI6InJlZnJlc2giLCJpYXQiOjE3OTE5NTUwMDYsImV4cCI6MTc5MjU1OTgwNn0.WW4Dq8vIiUlrbvNRYTpcXcC_IktCTJySbb7K_DCKJe0",
+        "token_type": "bearer",
+        "expires_in": 1800
+      }
+    },
+    {
+      "step": 1,
+      "request": "GET /roles",
+      "status": 200,
+      "ok": true,
+      "response": [
+        {
+          "id": 1,
+          "name": "super_admin",
+          "description": "Full access to every function, including user and role administration.",
+          "is_system": true,
+          "permissions": [
+            "alert:read",
+            "alert:write",
+            "asset:manage",
+            "asset:read",
+            "audit:read",
+            "dashboard:read",
+            "evidence:read",
+            "incident:approve_closure",
+            "incident:assign",
+            "incident:read",
+            "incident:sensitive",
+            "incident:write",
+            "investigation:read",
+            "investigation:write",
+            "notification:manage",
+            "organization:manage",
+            "organization:read",
+            "playbook:approve",
+            "playbook:execute",
+            "playbook:manage",
+            "remediation:approve",
+            "remediation:read",
+            "remediation:write",
+            "report:analyst_performance",
+            "report:export",
+            "report:read",
+            "risk:accept",
+            "risk:read",
+            "risk:write",
+            "role:manage",
+            "sla:manage",
+            "sla:read",
+            "team:manage",
+            "user:manage",
+            "user:read",
+            "vulnerability:read",
+            "vulnerability:write"
+          ],
+          "created_at": "2026-10-13T08:56:16.680452Z"
+        },
+        {
+          "id": 2,
+          "name": "security_manager",
+          "description": "Runs the security team: assigns incidents, approves closure/remediation, accepts risk.",
+          "is_system": true,
+          "permissions": [
+            "alert:read",
+            "alert:write",
+            "asset:read",
+            "audit:read",
+            "dashboard:read",
+            "evidence:read",
+            "incident:approve_closure",
+            "incident:assign",
+            "incident:read",
+            "incident:sensitive",
+            "incident:write",
+            "investigation:read",
+            "investigation:write",
+            "notification:manage",
+            "organization:read",
+            "playbook:approve",
+            "playbook:execute",
+            "playbook:manage",
+            "remediation:approve",
+            "remediation:read",
+            "remediation:write",
+            "report:analyst_performance",
+            "report:export",
+            "report:read",
+            "risk:accept",
+            "risk:read",
+            "risk:write",
+            "sla:manage",
+            "sla:read",
+            "team:manage",
+            "user:read",
+            "vulnerability:read",
+            "vulnerability:write"
+          ],
+          "created_at": "2026-10-13T08:56:16.680462Z"
+        },
+        {
+          "id": 3,
+          "name": "security_analyst",
+          "description": "Triages alerts, investigates incidents and works remediation/playbook tasks.",
+          "is_system": true,
+          "permissions": [
+            "alert:read",
+            "alert:write",
+            "asset:read",
+            "dashboard:read",
+            "evidence:read",
+            "incident:read",
+            "incident:write",
+            "investigation:read",
+            "investigation:write",
+            "organization:read",
+            "playbook:execute",
+            "remediation:read",
+            "remediation:write",
+            "report:read",
+            "risk:read",
+            "sla:read",
+            "vulnerability:read",
+            "vulnerability:write"
+          ],
+          "created_at": "2026-10-13T08:56:16.680463Z"
+        },
+        {
+          "id": 4,
+          "name": "it_administrator",
+          "description": "Maintains organizations, assets and user accounts; executes remediation work.",
+          "is_system": true,
+          "permissions": [
+            "alert:read",
+            "asset:manage",
+            "asset:read",
+            "dashboard:read",
+            "incident:read",
+            "organization:manage",
+            "organization:read",
+            "playbook:execute",
+            "remediation:read",
+            "remediation:write",
+            "risk:read",
+            "user:manage",
+            "user:read",
+            "vulnerability:read"
+          ],
+          "created_at": "2026-10-13T08:56:16.680464Z"
+        },
+        {
+          "id": 5,
+          "name": "auditor",
+          "description": "Read-only access to records, audit logs and reports (no sensitive incident evidence).",
+          "is_system": true,
+          "permissions": [
+            "alert:read",
+            "asset:read",
+            "audit:read",
+            "dashboard:read",
+            "incident:read",
+            "investigation:read",
+            "organization:read",
+            "remediation:read",
+            "report:export",
+            "report:read",
+            "risk:read",
+            "sla:read",
+            "user:read",
+            "vulnerability:read"
+          ],
+          "created_at": "2026-10-13T08:56:16.680465Z"
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "request": "POST /users",
+      "status": 201,
+      "ok": true,
+      "response": {
+        "id": 3,
+        "email": "it_administrator.955005.1@example.com",
+        "full_name": "it_administrator 1",
+        "phone": "9876543210",
+        "role": {
+          "id": 4,
+          "name": "it_administrator"
+        },
+        "organization_id": null,
+        "department_id": null,
+        "is_active": true,
+        "last_login_at": null,
+        "created_at": "2026-10-14T05:16:46.571158Z"
+      }
+    },
+    {
+      "step": 1,
+      "request": "POST /auth/login",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwic2lkIjoiYzNkZjI5ZGYtNzJlZC00MTU0LWI3OTUtNGNjZTY3NDFkMGQwIiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTc5MTk1NTAwNiwiZXhwIjoxNzkxOTU2ODA2LCJyb2xlIjoiaXRfYWRtaW5pc3RyYXRvciJ9.6TZVu_KnGSmjoRnm1FM6K-utRBdSfFBfTqs9Bm-5xkE",
+        "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwic2lkIjoiYzNkZjI5ZGYtNzJlZC00MTU0LWI3OTUtNGNjZTY3NDFkMGQwIiwidHlwZSI6InJlZnJlc2giLCJpYXQiOjE3OTE5NTUwMDYsImV4cCI6MTc5MjU1OTgwNn0.EDS7qrXUNQOcwU7gvis_LtdDmifMm_zBccVY7WCxiFM",
+        "token_type": "bearer",
+        "expires_in": 1800
+      }
+    },
+    {
+      "step": 1,
+      "request": "POST /users",
+      "status": 201,
+      "ok": true,
+      "response": {
+        "id": 4,
+        "email": "security_manager.955005.1@example.com",
+        "full_name": "security_manager 1",
+        "phone": "9876543210",
+        "role": {
+          "id": 2,
+          "name": "security_manager"
+        },
+        "organization_id": null,
+        "department_id": null,
+        "is_active": true,
+        "last_login_at": null,
+        "created_at": "2026-10-14T05:16:47.139620Z"
+      }
+    },
+    {
+      "step": 1,
+      "request": "POST /auth/login",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0Iiwic2lkIjoiYzVmYmU3OWItOTM0Zi00ZDhiLTkxZTQtYmZkMmNhMzdmYmQxIiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTc5MTk1NTAwNywiZXhwIjoxNzkxOTU2ODA3LCJyb2xlIjoic2VjdXJpdHlfbWFuYWdlciJ9.d733um4Bd7ejRmJFaArfgBv_7pmTKMyOu-uWIsHfbWU",
+        "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0Iiwic2lkIjoiYzVmYmU3OWItOTM0Zi00ZDhiLTkxZTQtYmZkMmNhMzdmYmQxIiwidHlwZSI6InJlZnJlc2giLCJpYXQiOjE3OTE5NTUwMDcsImV4cCI6MTc5MjU1OTgwN30.UiEaCDm52SQfpuF5HNjjSQ0cC63OIsa5iFKKShSEMUo",
+        "token_type": "bearer",
+        "expires_in": 1800
+      }
+    },
+    {
+      "step": 1,
+      "request": "POST /users",
+      "status": 201,
+      "ok": true,
+      "response": {
+        "id": 5,
+        "email": "security_manager.955005.2@example.com",
+        "full_name": "security_manager 2",
+        "phone": "9876543210",
+        "role": {
+          "id": 2,
+          "name": "security_manager"
+        },
+        "organization_id": null,
+        "department_id": null,
+        "is_active": true,
+        "last_login_at": null,
+        "created_at": "2026-10-14T05:16:47.714765Z"
+      }
+    },
+    {
+      "step": 1,
+      "request": "POST /auth/login",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1Iiwic2lkIjoiMGRkMTliNDktYWZmNC00MWQ1LWFiOWEtZmI3ZDYyNjI1NjFiIiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTc5MTk1NTAwNywiZXhwIjoxNzkxOTU2ODA3LCJyb2xlIjoic2VjdXJpdHlfbWFuYWdlciJ9.bVeJqRtBtJ3khpvMEKv56uwOoWS-VoxpibokrfHQBpw",
+        "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1Iiwic2lkIjoiMGRkMTliNDktYWZmNC00MWQ1LWFiOWEtZmI3ZDYyNjI1NjFiIiwidHlwZSI6InJlZnJlc2giLCJpYXQiOjE3OTE5NTUwMDcsImV4cCI6MTc5MjU1OTgwN30.sm4E5FUeTkN3zeiSMBc8KAU2UuTeiZkODKbVz2bYZvk",
+        "token_type": "bearer",
+        "expires_in": 1800
+      }
+    },
+    {
+      "step": 1,
+      "request": "POST /users",
+      "status": 201,
+      "ok": true,
+      "response": {
+        "id": 6,
+        "email": "security_analyst.955005.1@example.com",
+        "full_name": "security_analyst 1",
+        "phone": "9876543210",
+        "role": {
+          "id": 3,
+          "name": "security_analyst"
+        },
+        "organization_id": null,
+        "department_id": null,
+        "is_active": true,
+        "last_login_at": null,
+        "created_at": "2026-10-14T05:16:48.269498Z"
+      }
+    },
+    {
+      "step": 1,
+      "request": "POST /auth/login",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2Iiwic2lkIjoiYmMwZDU3MjAtYzM2ZC00MTM0LTg1Y2QtMTQ0MGVjOTk0NjVlIiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTc5MTk1NTAwOCwiZXhwIjoxNzkxOTU2ODA4LCJyb2xlIjoic2VjdXJpdHlfYW5hbHlzdCJ9.f0a1wqFM6CwfXnKnwMY-wRFhPiOrUrgVAlBM-2rBmvk",
+        "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2Iiwic2lkIjoiYmMwZDU3MjAtYzM2ZC00MTM0LTg1Y2QtMTQ0MGVjOTk0NjVlIiwidHlwZSI6InJlZnJlc2giLCJpYXQiOjE3OTE5NTUwMDgsImV4cCI6MTc5MjU1OTgwOH0.S_PDn7K_2IFUi5n0xpK5xWz3dYdrDy64rMfTIoLebYQ",
+        "token_type": "bearer",
+        "expires_in": 1800
+      }
+    },
+    {
+      "step": 2,
+      "request": "POST /organizations",
+      "status": 201,
+      "ok": true,
+      "response": {
+        "id": 1,
+        "name": "Demo Corp 955005",
+        "description": null,
+        "industry": "Finance",
+        "contact_email": null,
+        "contact_phone": "9876543210",
+        "is_active": true,
+        "created_at": "2026-10-14T05:16:48.560454Z"
+      }
+    },
+    {
+      "step": 2,
+      "request": "POST /departments",
+      "status": 201,
+      "ok": true,
+      "response": {
+        "id": 1,
+        "organization_id": 1,
+        "name": "Platform 955005",
+        "description": null,
+        "is_active": true,
+        "created_at": "2026-10-14T05:16:48.586191Z"
+      }
+    },
+    {
+      "step": 2,
+      "request": "POST /assets",
+      "status": 201,
+      "ok": true,
+      "response": {
+        "id": 1,
+        "name": "db-955005",
+        "asset_type": "database",
+        "criticality": "critical",
+        "status": "active",
+        "hostname": null,
+        "ip_address": "10.1.0.10",
+        "location": null,
+        "description": null,
+        "organization_id": 1,
+        "department": {
+          "id": 1,
+          "name": "Platform 955005"
+        },
+        "owner": null,
+        "created_at": "2026-10-14T05:16:48.629415Z",
+        "updated_at": "2026-10-14T05:16:48.629419Z"
+      }
+    },
+    {
+      "step": 2,
+      "request": "POST /assets",
+      "status": 201,
+      "ok": true,
+      "response": {
+        "id": 2,
+        "name": "web-955005",
+        "asset_type": "server",
+        "criticality": "high",
+        "status": "active",
+        "hostname": null,
+        "ip_address": "10.1.0.20",
+        "location": null,
+        "description": null,
+        "organization_id": 1,
+        "department": {
+          "id": 1,
+          "name": "Platform 955005"
+        },
+        "owner": null,
+        "created_at": "2026-10-14T05:16:48.643450Z",
+        "updated_at": "2026-10-14T05:16:48.643454Z"
+      }
+    },
+    {
+      "step": 3,
+      "request": "POST /alerts",
+      "status": 201,
+      "ok": true,
+      "response": {
+        "id": 1,
+        "reference": "ALR-2026-000001",
+        "title": "Brute force attempt #0",
+        "description": null,
+        "source": "SIEM",
+        "category": "unauthorized_access",
+        "severity": "high",
+        "status": "new",
+        "asset": {
+          "id": 1,
+          "name": "db-955005",
+          "asset_type": "database",
+          "criticality": "critical"
+        },
+        "assigned_to": null,
+        "detected_at": "2026-10-14T04:26:48.647337Z",
+        "is_duplicate": false,
+        "duplicate_of_id": null,
+        "occurrence_count": 1,
+        "correlation_id": null,
+        "created_at": "2026-10-14T05:16:48.677943Z",
+        "updated_at": "2026-10-14T05:16:48.679963Z"
+      }
+    },
+    {
+      "step": 3,
+      "request": "POST /alerts",
+      "status": 201,
+      "ok": true,
+      "response": {
+        "id": 2,
+        "reference": "ALR-2026-000002",
+        "title": "Brute force attempt #1",
+        "description": null,
+        "source": "SIEM",
+        "category": "unauthorized_access",
+        "severity": "high",
+        "status": "new",
+        "asset": {
+          "id": 1,
+          "name": "db-955005",
+          "asset_type": "database",
+          "criticality": "critical"
+        },
+        "assigned_to": null,
+        "detected_at": "2026-10-14T04:41:48.647337Z",
+        "is_duplicate": false,
+        "duplicate_of_id": null,
+        "occurrence_count": 1,
+        "correlation_id": null,
+        "created_at": "2026-10-14T05:16:48.695491Z",
+        "updated_at": "2026-10-14T05:16:48.696284Z"
+      }
+    },
+    {
+      "step": 3,
+      "request": "POST /alerts",
+      "status": 201,
+      "ok": true,
+      "response": {
+        "id": 3,
+        "reference": "ALR-2026-000003",
+        "title": "Brute force attempt #2",
+        "description": null,
+        "source": "SIEM",
+        "category": "unauthorized_access",
+        "severity": "critical",
+        "status": "new",
+        "asset": {
+          "id": 1,
+          "name": "db-955005",
+          "asset_type": "database",
+          "criticality": "critical"
+        },
+        "assigned_to": null,
+        "detected_at": "2026-10-14T04:56:48.647337Z",
+        "is_duplicate": false,
+        "duplicate_of_id": null,
+        "occurrence_count": 1,
+        "correlation_id": null,
+        "created_at": "2026-10-14T05:16:48.704710Z",
+        "updated_at": "2026-10-14T05:16:48.705295Z"
+      }
+    },
+    {
+      "step": 3,
+      "request": "POST /alerts",
+      "status": 201,
+      "ok": true,
+      "response": {
+        "id": 4,
+        "reference": "ALR-2026-000004",
+        "title": "Brute force attempt #0",
+        "description": null,
+        "source": "SIEM",
+        "category": "unauthorized_access",
+        "severity": "high",
+        "status": "new",
+        "asset": {
+          "id": 1,
+          "name": "db-955005",
+          "asset_type": "database",
+          "criticality": "critical"
+        },
+        "assigned_to": null,
+        "detected_at": "2026-10-14T05:16:48.712508Z",
+        "is_duplicate": true,
+        "duplicate_of_id": 1,
+        "occurrence_count": 1,
+        "correlation_id": null,
+        "created_at": "2026-10-14T05:16:48.714237Z",
+        "updated_at": "2026-10-14T05:16:48.715039Z"
+      }
+    },
+    {
+      "step": 4,
+      "request": "GET /correlations/repeated-alerts",
+      "status": 200,
+      "ok": true,
+      "response": [
+        {
+          "asset_id": 1,
+          "asset_name": "db-955005",
+          "category": "unauthorized_access",
+          "alert_count": 4,
+          "alert_ids": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "first_detected_at": "2026-10-14T04:26:48.647337Z",
+          "last_detected_at": "2026-10-14T05:16:48.712508Z",
+          "already_correlated": false
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "request": "POST /correlations/auto",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "created": [
+          {
+            "id": 1,
+            "reference": "COR-2026-000001",
+            "name": "Repeated unauthorized access alerts on db-955005",
+            "rule": "same_asset_category",
+            "asset_id": 1,
+            "category": "unauthorized_access",
+            "status": "open",
+            "alerts": [
+              {
+                "id": 1,
+                "reference": "ALR-2026-000001",
+                "title": "Brute force attempt #0",
+                "severity": "high",
+                "status": "new",
+                "detected_at": "2026-10-14T04:26:48.647337Z"
+              },
+              {
+                "id": 2,
+                "reference": "ALR-2026-000002",
+                "title": "Brute force attempt #1",
+                "severity": "high",
+                "status": "new",
+                "detected_at": "2026-10-14T04:41:48.647337Z"
+              },
+              {
+                "id": 3,
+                "reference": "ALR-2026-000003",
+                "title": "Brute force attempt #2",
+                "severity": "critical",
+                "status": "new",
+                "detected_at": "2026-10-14T04:56:48.647337Z"
+              },
+              {
+                "id": 4,
+                "reference": "ALR-2026-000004",
+                "title": "Brute force attempt #0",
+                "severity": "high",
+                "status": "new",
+                "detected_at": "2026-10-14T05:16:48.712508Z"
+              }
+            ],
+            "created_at": "2026-10-14T05:16:48.776629Z",
+            "updated_at": "2026-10-14T05:16:48.777791Z",
+            "alert_count": 4
+          }
+        ],
+        "updated": []
+      }
+    },
+    {
+      "step": 4,
+      "request": "GET /correlations",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "items": [
+          {
+            "id": 1,
+            "reference": "COR-2026-000001",
+            "name": "Repeated unauthorized access alerts on db-955005",
+            "rule": "same_asset_category",
+            "asset_id": 1,
+            "category": "unauthorized_access",
+            "status": "open",
+            "alerts": [
+              {
+                "id": 1,
+                "reference": "ALR-2026-000001",
+                "title": "Brute force attempt #0",
+                "severity": "high",
+                "status": "new",
+                "detected_at": "2026-10-14T04:26:48.647337Z"
+              },
+              {
+                "id": 2,
+                "reference": "ALR-2026-000002",
+                "title": "Brute force attempt #1",
+                "severity": "high",
+                "status": "new",
+                "detected_at": "2026-10-14T04:41:48.647337Z"
+              },
+              {
+                "id": 3,
+                "reference": "ALR-2026-000003",
+                "title": "Brute force attempt #2",
+                "severity": "critical",
+                "status": "new",
+                "detected_at": "2026-10-14T04:56:48.647337Z"
+              },
+              {
+                "id": 4,
+                "reference": "ALR-2026-000004",
+                "title": "Brute force attempt #0",
+                "severity": "high",
+                "status": "new",
+                "detected_at": "2026-10-14T05:16:48.712508Z"
+              }
+            ],
+            "created_at": "2026-10-14T05:16:48.776629Z",
+            "updated_at": "2026-10-14T05:16:48.777791Z",
+            "alert_count": 4
+          }
+        ],
+        "total": 1,
+        "page": 1,
+        "size": 20,
+        "pages": 1
+      }
+    },
+    {
+      "step": 5,
+      "request": "POST /incidents",
+      "status": 201,
+      "ok": true,
+      "response": {
+        "id": 1,
+        "reference": "INC-2026-000001",
+        "title": "Credential attack on db-955005",
+        "description": null,
+        "category": "unauthorized_access",
+        "severity": "critical",
+        "status": "new",
+        "is_sensitive": false,
+        "asset": {
+          "id": 1,
+          "name": "db-955005",
+          "asset_type": "database",
+          "criticality": "critical"
+        },
+        "correlation_id": 1,
+        "assigned_to": null,
+        "created_by_id": 4,
+        "resolution_summary": null,
+        "resolution_details": null,
+        "root_cause": null,
+        "resolved_at": null,
+        "closed_at": null,
+        "closure_requested_by_id": null,
+        "closure_requested_at": null,
+        "closure_approved_by_id": null,
+        "closure_note": null,
+        "sla": {
+          "incident_id": 1,
+          "severity": "critical",
+          "ack_deadline": "2026-10-14T05:31:48.871387Z",
+          "investigation_deadline": "2026-10-14T06:16:48.871387Z",
+          "resolution_deadline": "2026-10-14T09:16:48.871387Z",
+          "acknowledged_at": null,
+          "investigation_started_at": null,
+          "resolved_at": null,
+          "response_time_minutes": null,
+          "resolution_time_minutes": null,
+          "ack_breached": false,
+          "investigation_breached": false,
+          "resolution_breached": false,
+          "sla_status": "on_track",
+          "escalation_status": "none",
+          "escalation_level": 0,
+          "escalated_at": null,
+          "escalation_reason": null,
+          "minutes_to_resolution_deadline": 240.0
+        },
+        "created_at": "2026-10-14T05:16:48.871387Z",
+        "updated_at": "2026-10-14T05:16:48.876651Z",
+        "alerts": [
+          {
+            "id": 1,
+            "reference": "ALR-2026-000001",
+            "title": "Brute force attempt #0",
+            "severity": "high",
+            "status": "in_progress",
+            "detected_at": "2026-10-14T04:26:48.647337Z"
+          },
+          {
+            "id": 2,
+            "reference": "ALR-2026-000002",
+            "title": "Brute force attempt #1",
+            "severity": "high",
+            "status": "in_progress",
+            "detected_at": "2026-10-14T04:41:48.647337Z"
+          },
+          {
+            "id": 3,
+            "reference": "ALR-2026-000003",
+            "title": "Brute force attempt #2",
+            "severity": "critical",
+            "status": "in_progress",
+            "detected_at": "2026-10-14T04:56:48.647337Z"
+          },
+          {
+            "id": 4,
+            "reference": "ALR-2026-000004",
+            "title": "Brute force attempt #0",
+            "severity": "high",
+            "status": "in_progress",
+            "detected_at": "2026-10-14T05:16:48.712508Z"
+          }
+        ]
+      }
+    },
+    {
+      "step": 6,
+      "request": "POST /incidents/1/assign",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "id": 1,
+        "reference": "INC-2026-000001",
+        "title": "Credential attack on db-955005",
+        "description": null,
+        "category": "unauthorized_access",
+        "severity": "critical",
+        "status": "assigned",
+        "is_sensitive": false,
+        "asset": {
+          "id": 1,
+          "name": "db-955005",
+          "asset_type": "database",
+          "criticality": "critical"
+        },
+        "correlation_id": 1,
+        "assigned_to": {
+          "id": 6,
+          "full_name": "security_analyst 1",
+          "email": "security_analyst.955005.1@example.com"
+        },
+        "created_by_id": 4,
+        "resolution_summary": null,
+        "resolution_details": null,
+        "root_cause": null,
+        "resolved_at": null,
+        "closed_at": null,
+        "closure_requested_by_id": null,
+        "closure_requested_at": null,
+        "closure_approved_by_id": null,
+        "closure_note": null,
+        "sla": {
+          "incident_id": 1,
+          "severity": "critical",
+          "ack_deadline": "2026-10-14T05:31:48.871387Z",
+          "investigation_deadline": "2026-10-14T06:16:48.871387Z",
+          "resolution_deadline": "2026-10-14T09:16:48.871387Z",
+          "acknowledged_at": "2026-10-14T05:16:48.919081Z",
+          "investigation_started_at": null,
+          "resolved_at": null,
+          "response_time_minutes": 0.0,
+          "resolution_time_minutes": null,
+          "ack_breached": false,
+          "investigation_breached": false,
+          "resolution_breached": false,
+          "sla_status": "on_track",
+          "escalation_status": "none",
+          "escalation_level": 0,
+          "escalated_at": null,
+          "escalation_reason": null,
+          "minutes_to_resolution_deadline": 240.0
+        },
+        "created_at": "2026-10-14T05:16:48.871387Z",
+        "updated_at": "2026-10-14T05:16:48.923352Z"
+      }
+    },
+    {
+      "step": 7,
+      "request": "POST /vulnerabilities",
+      "status": 201,
+      "ok": true,
+      "response": {
+        "id": 1,
+        "reference": "VULN-2026-000001",
+        "title": "OpenSSH regreSSHion",
+        "description": null,
+        "cve_id": "CVE-2024-9550",
+        "severity": "high",
+        "cvss_score": 8.1,
+        "status": "open",
+        "recommendation": "Upgrade OpenSSH",
+        "remediation_deadline": "2026-11-13T05:16:48.958141Z",
+        "discovered_at": "2026-10-14T05:16:48.958141Z",
+        "created_at": "2026-10-14T05:16:48.962358Z",
+        "updated_at": "2026-10-14T05:16:48.971685Z",
+        "is_overdue": false
+      }
+    },
+    {
+      "step": 8,
+      "request": "GET /risks/formula",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "version": "v1",
+        "formula": "risk_score = (criticality_weight * severity_weight) / 16 * 70 + (cvss_score / 10) * 30",
+        "criticality_weights": {
+          "low": 1,
+          "medium": 2,
+          "high": 3,
+          "critical": 4
+        },
+        "severity_weights": {
+          "low": 1,
+          "medium": 2,
+          "high": 3,
+          "critical": 4
+        },
+        "level_bands": [
+          {
+            "min_score": 75.0,
+            "level": "critical"
+          },
+          {
+            "min_score": 50.0,
+            "level": "high"
+          },
+          {
+            "min_score": 25.0,
+            "level": "medium"
+          },
+          {
+            "min_score": 0.0,
+            "level": "low"
+          }
+        ],
+        "asset_aggregation": "Highest current score among the asset's open vulnerabilities (mitigated, closed and accepted-risk vulnerabilities are excluded).",
+        "examples": [
+          {
+            "asset_criticality": "critical",
+            "vulnerability_severity": "critical",
+            "cvss_score": 9.8,
+            "risk_score": 99.4,
+            "risk_level": "critical"
+          },
+          {
+            "asset_criticality": "high",
+            "vulnerability_severity": "high",
+            "cvss_score": 7.5,
+            "risk_score": 61.88,
+            "risk_level": "high"
+          },
+          {
+            "asset_criticality": "medium",
+            "vulnerability_severity": "medium",
+            "cvss_score": 5.0,
+            "risk_score": 32.5,
+            "risk_level": "medium"
+          },
+          {
+            "asset_criticality": "low",
+            "vulnerability_severity": "low",
+            "cvss_score": 2.0,
+            "risk_score": 10.38,
+            "risk_level": "low"
+          }
+        ]
+      }
+    },
+    {
+      "step": 8,
+      "request": "POST /risks/calculate",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "calculated": 0,
+        "unchanged": 1,
+        "assessments": []
+      }
+    },
+    {
+      "step": 8,
+      "request": "GET /risks/assets/1",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "asset": {
+          "id": 1,
+          "name": "db-955005",
+          "asset_type": "database",
+          "criticality": "critical"
+        },
+        "risk_score": 76.8,
+        "risk_level": "critical",
+        "open_vulnerabilities": 1,
+        "accepted_vulnerabilities": 0
+      }
+    },
+    {
+      "step": 8,
+      "request": "GET /risks/high-risk-assets",
+      "status": 200,
+      "ok": true,
+      "response": [
+        {
+          "asset": {
+            "id": 1,
+            "name": "db-955005",
+            "asset_type": "database",
+            "criticality": "critical"
+          },
+          "risk_score": 76.8,
+          "risk_level": "critical",
+          "open_vulnerabilities": 1,
+          "accepted_vulnerabilities": 0
+        },
+        {
+          "asset": {
+            "id": 2,
+            "name": "web-955005",
+            "asset_type": "server",
+            "criticality": "high"
+          },
+          "risk_score": 63.67,
+          "risk_level": "high",
+          "open_vulnerabilities": 1,
+          "accepted_vulnerabilities": 0
+        }
+      ]
+    },
+    {
+      "step": 9,
+      "request": "POST /remediation/tasks",
+      "status": 201,
+      "ok": true,
+      "response": {
+        "id": 1,
+        "reference": "REM-2026-000001",
+        "vulnerability_id": 1,
+        "asset_id": 1,
+        "title": "Patch OpenSSH",
+        "description": null,
+        "team": null,
+        "assignee": {
+          "id": 6,
+          "full_name": "security_analyst 1",
+          "email": "security_analyst.955005.1@example.com"
+        },
+        "priority": "high",
+        "status": "open",
+        "due_date": "2026-10-17T05:16:49.049600Z",
+        "created_by_id": 4,
+        "submitted_by_id": null,
+        "submitted_at": null,
+        "approved_at": null,
+        "created_at": "2026-10-14T05:16:49.086743Z",
+        "updated_at": "2026-10-14T05:16:49.089773Z",
+        "is_overdue": false
+      }
+    },
+    {
+      "step": 9,
+      "request": "POST /remediation/tasks/1/start",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "id": 1,
+        "reference": "REM-2026-000001",
+        "vulnerability_id": 1,
+        "asset_id": 1,
+        "title": "Patch OpenSSH",
+        "description": null,
+        "team": null,
+        "assignee": {
+          "id": 6,
+          "full_name": "security_analyst 1",
+          "email": "security_analyst.955005.1@example.com"
+        },
+        "priority": "high",
+        "status": "in_progress",
+        "due_date": "2026-10-17T05:16:49.049600Z",
+        "created_by_id": 4,
+        "submitted_by_id": null,
+        "submitted_at": null,
+        "approved_at": null,
+        "created_at": "2026-10-14T05:16:49.086743Z",
+        "updated_at": "2026-10-14T05:16:49.111868Z",
+        "is_overdue": false
+      }
+    },
+    {
+      "step": 9,
+      "request": "POST /remediation/tasks/1/evidence",
+      "status": 201,
+      "ok": true,
+      "response": {
+        "id": 1,
+        "task_id": 1,
+        "description": "Upgraded to 9.8p1",
+        "reference_type": "patch",
+        "reference_url": null,
+        "added_by_id": 6,
+        "added_at": "2026-10-14T05:16:49.121369Z"
+      }
+    },
+    {
+      "step": 9,
+      "request": "POST /remediation/tasks/1/submit",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "id": 1,
+        "reference": "REM-2026-000001",
+        "vulnerability_id": 1,
+        "asset_id": 1,
+        "title": "Patch OpenSSH",
+        "description": null,
+        "team": null,
+        "assignee": {
+          "id": 6,
+          "full_name": "security_analyst 1",
+          "email": "security_analyst.955005.1@example.com"
+        },
+        "priority": "high",
+        "status": "pending_approval",
+        "due_date": "2026-10-17T05:16:49.049600Z",
+        "created_by_id": 4,
+        "submitted_by_id": 6,
+        "submitted_at": "2026-10-14T05:16:49.133720Z",
+        "approved_at": null,
+        "created_at": "2026-10-14T05:16:49.086743Z",
+        "updated_at": "2026-10-14T05:16:49.137100Z",
+        "is_overdue": false
+      }
+    },
+    {
+      "step": 9,
+      "request": "POST /remediation/tasks/1/approve",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "id": 1,
+        "reference": "REM-2026-000001",
+        "vulnerability_id": 1,
+        "asset_id": 1,
+        "title": "Patch OpenSSH",
+        "description": null,
+        "team": null,
+        "assignee": {
+          "id": 6,
+          "full_name": "security_analyst 1",
+          "email": "security_analyst.955005.1@example.com"
+        },
+        "priority": "high",
+        "status": "approved",
+        "due_date": "2026-10-17T05:16:49.049600Z",
+        "created_by_id": 4,
+        "submitted_by_id": 6,
+        "submitted_at": "2026-10-14T05:16:49.133720Z",
+        "approved_at": "2026-10-14T05:16:49.146266Z",
+        "created_at": "2026-10-14T05:16:49.086743Z",
+        "updated_at": "2026-10-14T05:16:49.149532Z",
+        "is_overdue": false
+      }
+    },
+    {
+      "step": 10,
+      "request": "POST /investigations",
+      "status": 201,
+      "ok": true,
+      "response": {
+        "id": 1,
+        "reference": "INV-2026-000001",
+        "title": "Credential attack investigation",
+        "description": null,
+        "status": "open",
+        "owner": {
+          "id": 6,
+          "full_name": "security_analyst 1",
+          "email": "security_analyst.955005.1@example.com"
+        },
+        "created_by_id": 6,
+        "summary": null,
+        "completed_at": null,
+        "incident_ids": [
+          1
+        ],
+        "alert_ids": [],
+        "asset_ids": [
+          1
+        ],
+        "created_at": "2026-10-14T05:16:49.215336Z",
+        "updated_at": "2026-10-14T05:16:49.220104Z"
+      }
+    },
+    {
+      "step": 10,
+      "request": "POST /investigations/1/notes",
+      "status": 201,
+      "ok": true,
+      "response": {
+        "id": 3,
+        "incident_id": null,
+        "investigation_id": 1,
+        "author_id": 6,
+        "note_type": "note",
+        "content": "Source range blocked (simulated)",
+        "created_at": "2026-10-14T05:16:49.242448Z"
+      }
+    },
+    {
+      "step": 10,
+      "request": "POST /investigations/1/evidence",
+      "status": 201,
+      "ok": true,
+      "response": {
+        "id": 1,
+        "investigation_id": 1,
+        "title": "Auth log extract",
+        "evidence_type": "log",
+        "description": null,
+        "reference": "s3://evidence/auth.log",
+        "sha256": null,
+        "added_by_id": 6,
+        "added_at": "2026-10-14T05:16:49.254890Z"
+      }
+    },
+    {
+      "step": 10,
+      "request": "POST /investigations/1/complete",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "id": 1,
+        "reference": "INV-2026-000001",
+        "title": "Credential attack investigation",
+        "description": null,
+        "status": "completed",
+        "owner": {
+          "id": 6,
+          "full_name": "security_analyst 1",
+          "email": "security_analyst.955005.1@example.com"
+        },
+        "created_by_id": 6,
+        "summary": "Credential stuffing from one botnet range; no compromise.",
+        "completed_at": "2026-10-14T05:16:49.267253Z",
+        "incident_ids": [
+          1
+        ],
+        "alert_ids": [],
+        "asset_ids": [
+          1
+        ],
+        "created_at": "2026-10-14T05:16:49.215336Z",
+        "updated_at": "2026-10-14T05:16:49.268448Z"
+      }
+    },
+    {
+      "step": 11,
+      "request": "PATCH /incidents/1/status",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "id": 1,
+        "reference": "INC-2026-000001",
+        "title": "Credential attack on db-955005",
+        "description": null,
+        "category": "unauthorized_access",
+        "severity": "critical",
+        "status": "investigating",
+        "is_sensitive": false,
+        "asset": {
+          "id": 1,
+          "name": "db-955005",
+          "asset_type": "database",
+          "criticality": "critical"
+        },
+        "correlation_id": 1,
+        "assigned_to": {
+          "id": 6,
+          "full_name": "security_analyst 1",
+          "email": "security_analyst.955005.1@example.com"
+        },
+        "created_by_id": 4,
+        "resolution_summary": null,
+        "resolution_details": null,
+        "root_cause": null,
+        "resolved_at": null,
+        "closed_at": null,
+        "closure_requested_by_id": null,
+        "closure_requested_at": null,
+        "closure_approved_by_id": null,
+        "closure_note": null,
+        "sla": {
+          "incident_id": 1,
+          "severity": "critical",
+          "ack_deadline": "2026-10-14T05:31:48.871387Z",
+          "investigation_deadline": "2026-10-14T06:16:48.871387Z",
+          "resolution_deadline": "2026-10-14T09:16:48.871387Z",
+          "acknowledged_at": "2026-10-14T05:16:48.919081Z",
+          "investigation_started_at": "2026-10-14T05:16:49.278749Z",
+          "resolved_at": null,
+          "response_time_minutes": 0.0,
+          "resolution_time_minutes": null,
+          "ack_breached": false,
+          "investigation_breached": false,
+          "resolution_breached": false,
+          "sla_status": "on_track",
+          "escalation_status": "none",
+          "escalation_level": 0,
+          "escalated_at": null,
+          "escalation_reason": null,
+          "minutes_to_resolution_deadline": 240.0
+        },
+        "created_at": "2026-10-14T05:16:48.871387Z",
+        "updated_at": "2026-10-14T05:16:49.280564Z"
+      }
+    },
+    {
+      "step": 11,
+      "request": "GET /slas/incidents/1",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "incident_id": 1,
+        "severity": "critical",
+        "ack_deadline": "2026-10-14T05:31:48.871387Z",
+        "investigation_deadline": "2026-10-14T06:16:48.871387Z",
+        "resolution_deadline": "2026-10-14T09:16:48.871387Z",
+        "acknowledged_at": "2026-10-14T05:16:48.919081Z",
+        "investigation_started_at": "2026-10-14T05:16:49.278749Z",
+        "resolved_at": null,
+        "response_time_minutes": 0.0,
+        "resolution_time_minutes": null,
+        "ack_breached": false,
+        "investigation_breached": false,
+        "resolution_breached": false,
+        "sla_status": "on_track",
+        "escalation_status": "none",
+        "escalation_level": 0,
+        "escalated_at": null,
+        "escalation_reason": null,
+        "minutes_to_resolution_deadline": 240.0
+      }
+    },
+    {
+      "step": 12,
+      "request": "POST /incidents/1/resolve",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "id": 1,
+        "reference": "INC-2026-000001",
+        "title": "Credential attack on db-955005",
+        "description": null,
+        "category": "unauthorized_access",
+        "severity": "critical",
+        "status": "resolved",
+        "is_sensitive": false,
+        "asset": {
+          "id": 1,
+          "name": "db-955005",
+          "asset_type": "database",
+          "criticality": "critical"
+        },
+        "correlation_id": 1,
+        "assigned_to": {
+          "id": 6,
+          "full_name": "security_analyst 1",
+          "email": "security_analyst.955005.1@example.com"
+        },
+        "created_by_id": 4,
+        "resolution_summary": "Attack blocked",
+        "resolution_details": "Blocked range, enforced MFA, patched OpenSSH.",
+        "root_cause": null,
+        "resolved_at": "2026-10-14T05:16:49.351091Z",
+        "closed_at": null,
+        "closure_requested_by_id": null,
+        "closure_requested_at": null,
+        "closure_approved_by_id": null,
+        "closure_note": null,
+        "sla": {
+          "incident_id": 1,
+          "severity": "critical",
+          "ack_deadline": "2026-10-14T05:31:48.871387Z",
+          "investigation_deadline": "2026-10-14T06:16:48.871387Z",
+          "resolution_deadline": "2026-10-14T09:16:48.871387Z",
+          "acknowledged_at": "2026-10-14T05:16:48.919081Z",
+          "investigation_started_at": "2026-10-14T05:16:49.278749Z",
+          "resolved_at": "2026-10-14T05:16:49.351091Z",
+          "response_time_minutes": 0.0,
+          "resolution_time_minutes": 0.01,
+          "ack_breached": false,
+          "investigation_breached": false,
+          "resolution_breached": false,
+          "sla_status": "met",
+          "escalation_status": "none",
+          "escalation_level": 0,
+          "escalated_at": null,
+          "escalation_reason": null,
+          "minutes_to_resolution_deadline": null
+        },
+        "created_at": "2026-10-14T05:16:48.871387Z",
+        "updated_at": "2026-10-14T05:16:49.367205Z"
+      }
+    },
+    {
+      "step": 12,
+      "request": "POST /incidents/1/closure/request",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "id": 1,
+        "reference": "INC-2026-000001",
+        "title": "Credential attack on db-955005",
+        "description": null,
+        "category": "unauthorized_access",
+        "severity": "critical",
+        "status": "resolved",
+        "is_sensitive": false,
+        "asset": {
+          "id": 1,
+          "name": "db-955005",
+          "asset_type": "database",
+          "criticality": "critical"
+        },
+        "correlation_id": 1,
+        "assigned_to": {
+          "id": 6,
+          "full_name": "security_analyst 1",
+          "email": "security_analyst.955005.1@example.com"
+        },
+        "created_by_id": 4,
+        "resolution_summary": "Attack blocked",
+        "resolution_details": "Blocked range, enforced MFA, patched OpenSSH.",
+        "root_cause": null,
+        "resolved_at": "2026-10-14T05:16:49.351091Z",
+        "closed_at": null,
+        "closure_requested_by_id": 4,
+        "closure_requested_at": "2026-10-14T05:16:49.381703Z",
+        "closure_approved_by_id": null,
+        "closure_note": null,
+        "sla": {
+          "incident_id": 1,
+          "severity": "critical",
+          "ack_deadline": "2026-10-14T05:31:48.871387Z",
+          "investigation_deadline": "2026-10-14T06:16:48.871387Z",
+          "resolution_deadline": "2026-10-14T09:16:48.871387Z",
+          "acknowledged_at": "2026-10-14T05:16:48.919081Z",
+          "investigation_started_at": "2026-10-14T05:16:49.278749Z",
+          "resolved_at": "2026-10-14T05:16:49.351091Z",
+          "response_time_minutes": 0.0,
+          "resolution_time_minutes": 0.01,
+          "ack_breached": false,
+          "investigation_breached": false,
+          "resolution_breached": false,
+          "sla_status": "met",
+          "escalation_status": "none",
+          "escalation_level": 0,
+          "escalated_at": null,
+          "escalation_reason": null,
+          "minutes_to_resolution_deadline": null
+        },
+        "created_at": "2026-10-14T05:16:48.871387Z",
+        "updated_at": "2026-10-14T05:16:49.384865Z"
+      }
+    },
+    {
+      "step": 12,
+      "request": "POST /incidents/1/closure/approve",
+      "status": 403,
+      "ok": true,
+      "response": {
+        "success": false,
+        "error": {
+          "code": "forbidden",
+          "message": "The closure must be approved by someone other than the person who requested it",
+          "details": null
+        },
+        "request_id": "9d362cf26c4849a8b2c3fe5805b10e6d"
+      }
+    },
+    {
+      "step": 12,
+      "request": "POST /incidents/1/closure/approve",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "id": 1,
+        "reference": "INC-2026-000001",
+        "title": "Credential attack on db-955005",
+        "description": null,
+        "category": "unauthorized_access",
+        "severity": "critical",
+        "status": "closed",
+        "is_sensitive": false,
+        "asset": {
+          "id": 1,
+          "name": "db-955005",
+          "asset_type": "database",
+          "criticality": "critical"
+        },
+        "correlation_id": 1,
+        "assigned_to": {
+          "id": 6,
+          "full_name": "security_analyst 1",
+          "email": "security_analyst.955005.1@example.com"
+        },
+        "created_by_id": 4,
+        "resolution_summary": "Attack blocked",
+        "resolution_details": "Blocked range, enforced MFA, patched OpenSSH.",
+        "root_cause": null,
+        "resolved_at": "2026-10-14T05:16:49.351091Z",
+        "closed_at": "2026-10-14T05:16:49.404535Z",
+        "closure_requested_by_id": 4,
+        "closure_requested_at": "2026-10-14T05:16:49.381703Z",
+        "closure_approved_by_id": 5,
+        "closure_note": null,
+        "sla": {
+          "incident_id": 1,
+          "severity": "critical",
+          "ack_deadline": "2026-10-14T05:31:48.871387Z",
+          "investigation_deadline": "2026-10-14T06:16:48.871387Z",
+          "resolution_deadline": "2026-10-14T09:16:48.871387Z",
+          "acknowledged_at": "2026-10-14T05:16:48.919081Z",
+          "investigation_started_at": "2026-10-14T05:16:49.278749Z",
+          "resolved_at": "2026-10-14T05:16:49.351091Z",
+          "response_time_minutes": 0.0,
+          "resolution_time_minutes": 0.01,
+          "ack_breached": false,
+          "investigation_breached": false,
+          "resolution_breached": false,
+          "sla_status": "met",
+          "escalation_status": "none",
+          "escalation_level": 0,
+          "escalated_at": null,
+          "escalation_reason": null,
+          "minutes_to_resolution_deadline": null
+        },
+        "created_at": "2026-10-14T05:16:48.871387Z",
+        "updated_at": "2026-10-14T05:16:49.405954Z"
+      }
+    },
+    {
+      "step": 13,
+      "request": "POST /notifications/process",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "delivered": 19,
+        "failed": 0
+      }
+    },
+    {
+      "step": 13,
+      "request": "GET /notifications",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "items": [
+          {
+            "id": 14,
+            "notification_type": "remediation_decision",
+            "title": "Remediation approved: REM-2026-000001",
+            "message": "'Patch OpenSSH' was approved: Verified",
+            "entity_type": "remediation_task",
+            "entity_id": 1,
+            "status": "delivered",
+            "is_read": false,
+            "read_at": null,
+            "delivered_at": "2026-10-14T05:16:49.434389Z",
+            "created_at": "2026-10-14T05:16:49.151846Z"
+          },
+          {
+            "id": 10,
+            "notification_type": "remediation_assigned",
+            "title": "Remediation task assigned: REM-2026-000001",
+            "message": "You were assigned 'Patch OpenSSH' (high); due 2026-10-17 05:16 UTC.",
+            "entity_type": "remediation_task",
+            "entity_id": 1,
+            "status": "delivered",
+            "is_read": false,
+            "read_at": null,
+            "delivered_at": "2026-10-14T05:16:49.434373Z",
+            "created_at": "2026-10-14T05:16:49.088505Z"
+          },
+          {
+            "id": 3,
+            "notification_type": "incident_assigned",
+            "title": "Incident assigned: INC-2026-000001",
+            "message": "You were assigned critical incident INC-2026-000001 'Credential attack on db-955005'.",
+            "entity_type": "incident",
+            "entity_id": 1,
+            "status": "delivered",
+            "is_read": false,
+            "read_at": null,
+            "delivered_at": "2026-10-14T05:16:49.434345Z",
+            "created_at": "2026-10-14T05:16:48.922709Z"
+          }
+        ],
+        "total": 3,
+        "page": 1,
+        "size": 20,
+        "pages": 1
+      }
+    },
+    {
+      "step": 14,
+      "request": "GET /dashboard",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "generated_at": "2026-10-14T05:16:49.480302Z",
+        "incidents": {
+          "total": 1,
+          "open": 0,
+          "resolved": 1,
+          "by_status": {
+            "closed": 1
+          },
+          "by_severity": {
+            "critical": 1
+          }
+        },
+        "alerts": {
+          "total": 3,
+          "critical_total": 1,
+          "critical_open": 0,
+          "by_severity": {
+            "critical": 1,
+            "high": 2
+          }
+        },
+        "vulnerabilities": {
+          "total": 1,
+          "unresolved": 1,
+          "by_severity": {
+            "high": 1
+          },
+          "by_status": {
+            "in_remediation": 1
+          }
+        },
+        "high_risk_assets": [
+          {
+            "asset": {
+              "id": 2,
+              "name": "web-955005",
+              "asset_type": "server",
+              "criticality": "high"
+            },
+            "risk_score": 63.67,
+            "risk_level": "high",
+            "open_vulnerabilities": 1
+          }
+        ],
+        "response_times": {
+          "average_response_minutes": 0.0,
+          "average_resolution_minutes": 0.01,
+          "incidents_measured": 1
+        },
+        "sla": {
+          "tracked": 1,
+          "compliant": 1,
+          "breached": 0,
+          "in_progress": 0,
+          "compliance_percent": 100.0
+        },
+        "remediation": {
+          "overdue": 0,
+          "total_unfinished": 0
+        },
+        "analyst_workload": [
+          {
+            "user_id": 6,
+            "full_name": "security_analyst 1",
+            "open_incidents": 0,
+            "open_alerts": 0,
+            "open_remediation_tasks": 0,
+            "open_playbook_tasks": 0,
+            "total_open": 0
+          }
+        ],
+        "incident_trend": [
+          {
+            "date": "2026-09-15",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-09-16",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-09-17",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-09-18",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-09-19",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-09-20",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-09-21",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-09-22",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-09-23",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-09-24",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-09-25",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-09-26",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-09-27",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-09-28",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-09-29",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-09-30",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-10-01",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-10-02",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-10-03",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-10-04",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-10-05",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-10-06",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-10-07",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-10-08",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-10-09",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-10-10",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-10-11",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-10-12",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-10-13",
+            "created": 0,
+            "resolved": 0
+          },
+          {
+            "date": "2026-10-14",
+            "created": 1,
+            "resolved": 1
+          }
+        ]
+      }
+    },
+    {
+      "step": 15,
+      "request": "GET /reports/vulnerability-analysis",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "report": "vulnerability-analysis",
+        "generated_at": "2026-10-14T05:16:49.553784Z",
+        "parameters": {},
+        "summary": {
+          "total": 1,
+          "by_severity": {
+            "high": 1
+          },
+          "by_status": {
+            "in_remediation": 1
+          },
+          "overdue": 0,
+          "average_cvss": 8.1
+        },
+        "rows": [
+          {
+            "reference": "VULN-2026-000001",
+            "cve_id": "CVE-2024-9550",
+            "title": "OpenSSH regreSSHion",
+            "severity": "high",
+            "cvss_score": 8.1,
+            "status": "in_remediation",
+            "affected_assets": 2,
+            "max_risk_score": 63.67,
+            "discovered_at": "2026-10-14T05:16:48.958141",
+            "remediation_deadline": "2026-11-13T05:16:48.958141",
+            "overdue": false,
+            "days_open": 0
+          }
+        ]
+      }
+    },
+    {
+      "step": 15,
+      "request": "GET /reports/sla-compliance/export",
+      "status": 200,
+      "ok": true,
+      "response": "severity,incidents,met,breached,in_progress,compliance_percent,avg_response_minutes,avg_resolution_minutes,escalated\ncritical,1,1,0,0,100.0,0.0,0.01,0\n"
+    },
+    {
+      "step": 16,
+      "request": "GET /audit-logs",
+      "status": 200,
+      "ok": true,
+      "response": {
+        "items": [
+          {
+            "id": 37,
+            "user_id": 4,
+            "action": "report.export",
+            "entity_type": "report",
+            "entity_id": null,
+            "previous_value": null,
+            "new_value": {
+              "report": "sla-compliance",
+              "rows": 1,
+              "parameters": {}
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:49.563856Z"
+          },
+          {
+            "id": 36,
+            "user_id": 5,
+            "action": "incident.closure_approve",
+            "entity_type": "incident",
+            "entity_id": 1,
+            "previous_value": {
+              "status": "resolved"
+            },
+            "new_value": {
+              "status": "closed",
+              "comment": null
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:49.405147Z"
+          },
+          {
+            "id": 35,
+            "user_id": 4,
+            "action": "incident.closure_request",
+            "entity_type": "incident",
+            "entity_id": 1,
+            "previous_value": null,
+            "new_value": {
+              "comment": null
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:49.383653Z"
+          },
+          {
+            "id": 34,
+            "user_id": 6,
+            "action": "incident.resolve",
+            "entity_type": "incident",
+            "entity_id": 1,
+            "previous_value": {
+              "status": "investigating"
+            },
+            "new_value": {
+              "status": "resolved",
+              "resolution_summary": "Attack blocked"
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:49.365083Z"
+          },
+          {
+            "id": 33,
+            "user_id": 6,
+            "action": "incident.status_change",
+            "entity_type": "incident",
+            "entity_id": 1,
+            "previous_value": {
+              "status": "assigned"
+            },
+            "new_value": {
+              "status": "investigating",
+              "comment": null
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:49.279375Z"
+          },
+          {
+            "id": 32,
+            "user_id": 6,
+            "action": "investigation.complete",
+            "entity_type": "investigation",
+            "entity_id": 1,
+            "previous_value": {
+              "status": "in_progress"
+            },
+            "new_value": {
+              "status": "completed",
+              "summary": "Credential stuffing from one botnet range; no compromise."
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:49.267753Z"
+          },
+          {
+            "id": 31,
+            "user_id": 6,
+            "action": "evidence.add",
+            "entity_type": "investigation_evidence",
+            "entity_id": 1,
+            "previous_value": null,
+            "new_value": {
+              "investigation_id": 1,
+              "title": "Auth log extract",
+              "evidence_type": "log"
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:49.255479Z"
+          },
+          {
+            "id": 30,
+            "user_id": 6,
+            "action": "investigation.create",
+            "entity_type": "investigation",
+            "entity_id": 1,
+            "previous_value": null,
+            "new_value": {
+              "title": "Credential attack investigation",
+              "owner_id": 6,
+              "incident_ids": [
+                1
+              ],
+              "alert_ids": [],
+              "asset_ids": [
+                1
+              ]
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:49.219507Z"
+          },
+          {
+            "id": 29,
+            "user_id": 5,
+            "action": "remediation.approve",
+            "entity_type": "remediation_task",
+            "entity_id": 1,
+            "previous_value": {
+              "status": "pending_approval"
+            },
+            "new_value": {
+              "status": "approved",
+              "comments": "Verified"
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:49.151549Z"
+          },
+          {
+            "id": 28,
+            "user_id": 6,
+            "action": "remediation.submit",
+            "entity_type": "remediation_task",
+            "entity_id": 1,
+            "previous_value": {
+              "status": "in_progress"
+            },
+            "new_value": {
+              "status": "pending_approval"
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:49.135883Z"
+          },
+          {
+            "id": 27,
+            "user_id": 6,
+            "action": "remediation.evidence_add",
+            "entity_type": "remediation_task",
+            "entity_id": 1,
+            "previous_value": null,
+            "new_value": {
+              "reference_type": "patch",
+              "reference_url": null
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:49.120659Z"
+          },
+          {
+            "id": 26,
+            "user_id": 6,
+            "action": "remediation.status_change",
+            "entity_type": "remediation_task",
+            "entity_id": 1,
+            "previous_value": {
+              "status": "open"
+            },
+            "new_value": {
+              "status": "in_progress"
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:49.110993Z"
+          },
+          {
+            "id": 25,
+            "user_id": 4,
+            "action": "remediation.create",
+            "entity_type": "remediation_task",
+            "entity_id": 1,
+            "previous_value": null,
+            "new_value": {
+              "title": "Patch OpenSSH",
+              "vulnerability_id": 1,
+              "asset_id": 1,
+              "assigned_team_id": null,
+              "assigned_to_id": 6,
+              "priority": "high",
+              "status": "open",
+              "due_date": "2026-10-17T05:16:49.049600"
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:49.088314Z"
+          },
+          {
+            "id": 24,
+            "user_id": 4,
+            "action": "risk.calculate",
+            "entity_type": "risk_assessment",
+            "entity_id": null,
+            "previous_value": null,
+            "new_value": {
+              "asset_id": 1,
+              "vulnerability_id": null,
+              "calculated": 0,
+              "unchanged": 1
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:49.031754Z"
+          },
+          {
+            "id": 23,
+            "user_id": 4,
+            "action": "vulnerability.create",
+            "entity_type": "vulnerability",
+            "entity_id": 1,
+            "previous_value": null,
+            "new_value": {
+              "title": "OpenSSH regreSSHion",
+              "cve_id": "CVE-2024-9550",
+              "severity": "high",
+              "cvss_score": 8.1,
+              "status": "open",
+              "recommendation": "Upgrade OpenSSH",
+              "remediation_deadline": "2026-11-13T05:16:48.958141",
+              "asset_ids": [
+                1,
+                2
+              ]
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:48.994687Z"
+          },
+          {
+            "id": 22,
+            "user_id": 4,
+            "action": "incident.assign",
+            "entity_type": "incident",
+            "entity_id": 1,
+            "previous_value": {
+              "assigned_to_id": null,
+              "status": "new"
+            },
+            "new_value": {
+              "assigned_to_id": 6,
+              "status": "assigned"
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:48.920885Z"
+          },
+          {
+            "id": 21,
+            "user_id": 4,
+            "action": "incident.create",
+            "entity_type": "incident",
+            "entity_id": 1,
+            "previous_value": null,
+            "new_value": {
+              "title": "Credential attack on db-955005",
+              "category": "unauthorized_access",
+              "severity": "critical",
+              "status": "new",
+              "is_sensitive": false,
+              "asset_id": 1,
+              "assigned_to_id": null,
+              "correlation_id": 1,
+              "alert_ids": [
+                1,
+                2,
+                3,
+                4
+              ]
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:48.885076Z"
+          },
+          {
+            "id": 20,
+            "user_id": 4,
+            "action": "correlation.auto",
+            "entity_type": "correlation",
+            "entity_id": 1,
+            "previous_value": null,
+            "new_value": {
+              "alert_ids": [
+                1,
+                2,
+                3,
+                4
+              ]
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:48.780472Z"
+          },
+          {
+            "id": 19,
+            "user_id": 4,
+            "action": "alert.create",
+            "entity_type": "alert",
+            "entity_id": 4,
+            "previous_value": null,
+            "new_value": {
+              "title": "Brute force attempt #0",
+              "source": "SIEM",
+              "category": "unauthorized_access",
+              "severity": "high",
+              "status": "new",
+              "asset_id": 1,
+              "assigned_to_id": null,
+              "detected_at": "2026-10-14T05:16:48.712508",
+              "is_duplicate": true,
+              "duplicate_of_id": 1
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:48.714804Z"
+          },
+          {
+            "id": 18,
+            "user_id": 4,
+            "action": "alert.create",
+            "entity_type": "alert",
+            "entity_id": 3,
+            "previous_value": null,
+            "new_value": {
+              "title": "Brute force attempt #2",
+              "source": "SIEM",
+              "category": "unauthorized_access",
+              "severity": "critical",
+              "status": "new",
+              "asset_id": 1,
+              "assigned_to_id": null,
+              "detected_at": "2026-10-14T04:56:48.647337",
+              "is_duplicate": false,
+              "duplicate_of_id": null
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:48.705152Z"
+          },
+          {
+            "id": 17,
+            "user_id": 4,
+            "action": "alert.create",
+            "entity_type": "alert",
+            "entity_id": 2,
+            "previous_value": null,
+            "new_value": {
+              "title": "Brute force attempt #1",
+              "source": "SIEM",
+              "category": "unauthorized_access",
+              "severity": "high",
+              "status": "new",
+              "asset_id": 1,
+              "assigned_to_id": null,
+              "detected_at": "2026-10-14T04:41:48.647337",
+              "is_duplicate": false,
+              "duplicate_of_id": null
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:48.696116Z"
+          },
+          {
+            "id": 16,
+            "user_id": 4,
+            "action": "alert.create",
+            "entity_type": "alert",
+            "entity_id": 1,
+            "previous_value": null,
+            "new_value": {
+              "title": "Brute force attempt #0",
+              "source": "SIEM",
+              "category": "unauthorized_access",
+              "severity": "high",
+              "status": "new",
+              "asset_id": 1,
+              "assigned_to_id": null,
+              "detected_at": "2026-10-14T04:26:48.647337",
+              "is_duplicate": false,
+              "duplicate_of_id": null
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:48.679440Z"
+          },
+          {
+            "id": 15,
+            "user_id": 3,
+            "action": "asset.create",
+            "entity_type": "asset",
+            "entity_id": 2,
+            "previous_value": null,
+            "new_value": {
+              "name": "web-955005",
+              "asset_type": "server",
+              "criticality": "high",
+              "status": "active",
+              "hostname": null,
+              "ip_address": "10.1.0.20",
+              "location": null,
+              "description": null,
+              "organization_id": 1,
+              "department_id": 1,
+              "owner_id": null
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:48.644125Z"
+          },
+          {
+            "id": 14,
+            "user_id": 3,
+            "action": "asset.create",
+            "entity_type": "asset",
+            "entity_id": 1,
+            "previous_value": null,
+            "new_value": {
+              "name": "db-955005",
+              "asset_type": "database",
+              "criticality": "critical",
+              "status": "active",
+              "hostname": null,
+              "ip_address": "10.1.0.10",
+              "location": null,
+              "description": null,
+              "organization_id": 1,
+              "department_id": 1,
+              "owner_id": null
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:48.630869Z"
+          },
+          {
+            "id": 13,
+            "user_id": 3,
+            "action": "department.create",
+            "entity_type": "department",
+            "entity_id": 1,
+            "previous_value": null,
+            "new_value": {
+              "organization_id": 1,
+              "name": "Platform 955005",
+              "description": null,
+              "is_active": true
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:48.586777Z"
+          },
+          {
+            "id": 12,
+            "user_id": 3,
+            "action": "organization.create",
+            "entity_type": "organization",
+            "entity_id": 1,
+            "previous_value": null,
+            "new_value": {
+              "name": "Demo Corp 955005",
+              "description": null,
+              "industry": "Finance",
+              "contact_email": null,
+              "contact_phone": "9876543210",
+              "is_active": true
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:48.561033Z"
+          },
+          {
+            "id": 11,
+            "user_id": 6,
+            "action": "auth.login",
+            "entity_type": "user",
+            "entity_id": 6,
+            "previous_value": null,
+            "new_value": {
+              "session_id": "bc0d5720-c36d-4134-85cd-1440ec99465e"
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:48.539815Z"
+          },
+          {
+            "id": 10,
+            "user_id": 1,
+            "action": "user.create",
+            "entity_type": "user",
+            "entity_id": 6,
+            "previous_value": null,
+            "new_value": {
+              "email": "security_analyst.955005.1@example.com",
+              "full_name": "security_analyst 1",
+              "phone": "9876543210",
+              "role_id": 3,
+              "organization_id": null,
+              "department_id": null,
+              "is_active": true
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:48.270100Z"
+          },
+          {
+            "id": 9,
+            "user_id": 5,
+            "action": "auth.login",
+            "entity_type": "user",
+            "entity_id": 5,
+            "previous_value": null,
+            "new_value": {
+              "session_id": "0dd19b49-aff4-41d5-ab9a-fb7d6262561b"
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:47.992079Z"
+          },
+          {
+            "id": 8,
+            "user_id": 1,
+            "action": "user.create",
+            "entity_type": "user",
+            "entity_id": 5,
+            "previous_value": null,
+            "new_value": {
+              "email": "security_manager.955005.2@example.com",
+              "full_name": "security_manager 2",
+              "phone": "9876543210",
+              "role_id": 2,
+              "organization_id": null,
+              "department_id": null,
+              "is_active": true
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:47.715327Z"
+          },
+          {
+            "id": 7,
+            "user_id": 4,
+            "action": "auth.login",
+            "entity_type": "user",
+            "entity_id": 4,
+            "previous_value": null,
+            "new_value": {
+              "session_id": "c5fbe79b-934f-4d8b-91e4-bfd2ca37fbd1"
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:47.423566Z"
+          },
+          {
+            "id": 6,
+            "user_id": 1,
+            "action": "user.create",
+            "entity_type": "user",
+            "entity_id": 4,
+            "previous_value": null,
+            "new_value": {
+              "email": "security_manager.955005.1@example.com",
+              "full_name": "security_manager 1",
+              "phone": "9876543210",
+              "role_id": 2,
+              "organization_id": null,
+              "department_id": null,
+              "is_active": true
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:47.140284Z"
+          },
+          {
+            "id": 5,
+            "user_id": 3,
+            "action": "auth.login",
+            "entity_type": "user",
+            "entity_id": 3,
+            "previous_value": null,
+            "new_value": {
+              "session_id": "c3df29df-72ed-4154-b795-4cce6741d0d0"
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:46.857370Z"
+          },
+          {
+            "id": 4,
+            "user_id": 1,
+            "action": "user.create",
+            "entity_type": "user",
+            "entity_id": 3,
+            "previous_value": null,
+            "new_value": {
+              "email": "it_administrator.955005.1@example.com",
+              "full_name": "it_administrator 1",
+              "phone": "9876543210",
+              "role_id": 4,
+              "organization_id": null,
+              "department_id": null,
+              "is_active": true
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:46.571897Z"
+          },
+          {
+            "id": 3,
+            "user_id": 1,
+            "action": "auth.login",
+            "entity_type": "user",
+            "entity_id": 1,
+            "previous_value": null,
+            "new_value": {
+              "session_id": "2aae76f2-2c6f-4e88-ba35-a0baf578ae2c"
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:46.250520Z"
+          },
+          {
+            "id": 2,
+            "user_id": 2,
+            "action": "user.register",
+            "entity_type": "user",
+            "entity_id": 2,
+            "previous_value": null,
+            "new_value": {
+              "email": "swathi@example.com",
+              "is_active": false
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-14T05:16:37.329203Z"
+          },
+          {
+            "id": 1,
+            "user_id": 1,
+            "action": "auth.login",
+            "entity_type": "user",
+            "entity_id": 1,
+            "previous_value": null,
+            "new_value": {
+              "session_id": "2e543890-0986-47aa-b43a-736898c05ce1"
+            },
+            "ip_address": "127.0.0.1",
+            "timestamp": "2026-10-13T08:56:19.147658Z"
+          }
+        ],
+        "total": 37,
+        "page": 1,
+        "size": 100,
+        "pages": 1
+      }
+    },
+    {
+      "step": 16,
+      "request": "DELETE /audit-logs/37",
+      "status": 405,
+      "ok": true,
+      "response": {
+        "success": false,
+        "error": {
+          "code": "method_not_allowed",
+          "message": "Method Not Allowed",
+          "details": null
+        },
+        "request_id": "ef67847011d34cecba1b5950bda1ae10"
+      }
+    }
+  ]
+}
